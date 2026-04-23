@@ -24,7 +24,7 @@ void creat_list(tipo_lista *l) {
 }
 
 int empty(tipo_lista *l) {
-	l->primeiro == NULL;
+    return (l->primeiro == NULL);
 }
 
 void insert_end(lista c, tipo_lista *l) {
@@ -44,14 +44,21 @@ void insert_end(lista c, tipo_lista *l) {
 }
 
 void abrir_lista(tipo_lista *l) {
-	lista *c = l->primeiro;
-	while(c != NULL) {
-		printf("Codigo: %d\n", c->codigo);
-		printf("NOME: %s\n", c->nome);
-		printf("IDADE: %d", c->idade);
-		c = c->prox;
-	}
+    lista *c = l->primeiro;
+    
+    if (c == NULL) {
+        printf("\n--- A lista esta vazia ---\n");
+        return;
+    }
 
+    printf("\n--- LISTA DE USUARIOS ---\n");
+    while(c != NULL) {
+        printf("Codigo: %d\n", c->codigo);
+        printf("NOME: %s\n", c->nome);
+        printf("IDADE: %d\n", c->idade); // Adicionado \n
+        printf("------------------------\n");
+        c = c->prox;
+    }
 }
 
 
@@ -61,8 +68,8 @@ void procurar_codigo(tipo_lista *l, int x) {
 
 	while(atual != NULL) {
 		if(atual->codigo == x) {
-			printf("Encontrado| \n");
-			printf("NOME: %s CODIGO: %d IDADE: %d", atual->nome, atual->codigo, atual->idade);
+			printf("Encontrado \n");
+			printf("NOME: %s | CODIGO: %d | IDADE: %d", atual->nome, atual->codigo, atual->idade);
 			encontrou = 1;
 			break;
 		}
@@ -77,23 +84,32 @@ void remover_usuario(tipo_lista *l, int x) {
 	lista *atual = l->primeiro;
 	lista *anterior = NULL;
 
+
 	while (atual != NULL && atual->codigo != x) {
 		anterior = atual;
 		atual = atual->prox;
 	}
+
 
 	if (atual == NULL) {
 		printf("Usuario com codigo %d nao encontrado para remocao.\n", x);
 		return;
 	}
 
+
 	if (anterior == NULL) {
 		l->primeiro = atual->prox;
+
+
 		if (l->primeiro == NULL) {
 			l->ultimo = NULL;
 		}
-	}else {
+	}
+
+	else {
 		anterior->prox = atual->prox;
+
+
 		if (atual == l->ultimo) {
 			l->ultimo = anterior;
 		}
@@ -108,10 +124,10 @@ int main() {
 	tipo_lista llista;
 	lista lis;
 	creat_list(&llista);
-
+    
 	lis.codigo = 10;
-	strcpy(lis.nome, "Carlos");
-	lis.idade = 25;
+	strcpy(lis.nome, "Pedro");
+	lis.idade = 30;
 	insert_end(lis, &llista);
 
 	lis.codigo = 20;
@@ -128,7 +144,10 @@ int main() {
 	printf("\nDigite o codigo para remover: ");
 	scanf("%d", &cod_remover);
 	remover_usuario(&llista, cod_remover);
+
 	abrir_lista(&llista);
-	
+
+
+
 	return 0;
 }
