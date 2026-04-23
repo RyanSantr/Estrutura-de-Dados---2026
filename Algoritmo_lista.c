@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -46,20 +47,10 @@ void abrir_lista(tipo_lista *l) {
 	lista *c = l->primeiro;
 	while(c != NULL) {
 		printf("Codigo: %d\n", c->codigo);
+		printf("NOME: %s\n", c->nome);
+		printf("IDADE: %d", c->idade);
 		c = c->prox;
 	}
-
-}
-
-void creat_user(lista *l) {
-	printf("Digite o seu nome: ");
-	scanf("%s", l->nome);
-	printf("\n");
-	printf("Digite seu codigo: ");
-	scanf("%d", l->codigo);
-	printf("\n");
-	printf("Digite sua idade: ");
-	scanf("%d", l->idade);
 
 }
 
@@ -83,46 +74,36 @@ void procurar_codigo(tipo_lista *l, int x) {
 }
 
 void remover_usuario(tipo_lista *l, int x) {
-    lista *atual = l->primeiro;
-    lista *anterior = NULL;
+	lista *atual = l->primeiro;
+	lista *anterior = NULL;
 
-    
-    while (atual != NULL && atual->codigo != x) {
-        anterior = atual;  
-        atual = atual->prox;
-    }
+	while (atual != NULL && atual->codigo != x) {
+		anterior = atual;
+		atual = atual->prox;
+	}
 
-    
-    if (atual == NULL) {
-        printf("Usuario com codigo %d nao encontrado para remocao.\n", x);
-        return;
-    }
+	if (atual == NULL) {
+		printf("Usuario com codigo %d nao encontrado para remocao.\n", x);
+		return;
+	}
 
-    
-    if (anterior == NULL) {
-        l->primeiro = atual->prox;
-        
-       
-        if (l->primeiro == NULL) {
-            l->ultimo = NULL;
-        }
-    } 
-    
-    else {
-        anterior->prox = atual->prox;
-        
-     
-        if (atual == l->ultimo) {
-            l->ultimo = anterior;
-        }
-    }
+	if (anterior == NULL) {
+		l->primeiro = atual->prox;
+		if (l->primeiro == NULL) {
+			l->ultimo = NULL;
+		}
+	}else {
+		anterior->prox = atual->prox;
+		if (atual == l->ultimo) {
+			l->ultimo = anterior;
+		}
+	}
 
-    free(atual); 
-    printf("Usuario %d removido com sucesso.\n", x);
+	free(atual);
+	printf("Usuario %d removido com sucesso.\n", x);
 }
 
 int main() {
-
 
 	tipo_lista llista;
 	lista lis;
@@ -142,12 +123,12 @@ int main() {
 	printf("Digite o codigo para buscar: ");
 	scanf("%d", &busca);
 	procurar_codigo(&llista, busca);
-	
+
 	int cod_remover;
-    printf("Digite o codigo para remover: ");
-    scanf("%d", &cod_remover);
-    
-    
-    abrir_lista(&llista);
+	printf("\nDigite o codigo para remover: ");
+	scanf("%d", &cod_remover);
+	remover_usuario(&llista, cod_remover);
+	abrir_lista(&llista);
+	
 	return 0;
 }
